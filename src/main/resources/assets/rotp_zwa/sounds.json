@@ -1,0 +1,22 @@
+{
+  "wa_summon": {
+    "subtitle": "rotp_zwa.subtitle.wa_summon",
+    "sounds": [ "rotp_zwa:stand/wa_summon_1"]
+  },
+  "wa_unsummon": {
+    "subtitle": "rotp_zwa.subtitle.wa_unsummon",
+    "sounds": [ "rotp_zwa:stand/wa_unsummon"]
+  },
+  "ice_shield":{
+    "subtitle": "rotp_zwa.subtitle.wa_shield",
+    "sounds": ["rotp_zwa:stand/wa_shield_01","rotp_zwa:stand/wa_shield_02"]
+  },
+  "ghaccio_wa": {
+    "subtitle": "rotp_zwa.subtitle.wa_user",
+    "sounds": ["rotp_zwa:user/ghaccio_wa_01","rotp_zwa:user/ghaccio_wa_02","rotp_zwa:user/ghaccio_wa_03"]
+  },
+
+  "void":{
+    "sounds": [ "rotp_zwa:void"]
+  }
+}
