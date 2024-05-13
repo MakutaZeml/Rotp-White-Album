@@ -33,6 +33,10 @@ public class InitStands {
 
     // ======================================== White Album ========================================
 
+    public static final RegistryObject<StandEntityAction> WHITE_ALBUM_PUNCH = ACTIONS.register("wa_punch",
+            () -> new StandEntityLightAttack(new StandEntityLightAttack.Builder()
+                    .punchSound(InitSounds.WHITE_ALBUM_PUNCH_LIGHT).swingHand().standOffsetFromUser(0,0,.5)
+                    .standSound(StandEntityAction.Phase.WINDUP, InitSounds.GHACCIO_MAN_ORA)));
 
     public static final RegistryObject<StandEntityAction> WA_BLOCK = ACTIONS.register("wa_block",
             () -> new FrozenBlock(new StandEntityAction.Builder().holdType().standSound(InitSounds.WHITE_ALBUM_BLOCK)
@@ -69,6 +73,7 @@ public class InitStands {
                             .color(0xD1E7F2)
                             .storyPartName(ModStandsInit.PART_5_NAME)
                             .leftClickHotbar(
+                                    WHITE_ALBUM_PUNCH.get(),
                                     FREEZE_SHOT.get()
                             )
                             .rightClickHotbar(
@@ -91,7 +96,7 @@ public class InitStands {
                             .build(),
 
                     InitEntities.ENTITIES,
-                    () -> new StandEntityType<WhiteAlbumEntity>(WhiteAlbumEntity::new, 0.1F, 0.1F)
+                    () -> new StandEntityType<WhiteAlbumEntity>(WhiteAlbumEntity::new, 0.65F, 1.95F)
                             .summonSound(InitSounds.WHITE_ALBUM_SUMMON)
                             .unsummonSound(InitSounds.WHITE_ALBUM_UNSUMMON))
                     .withDefaultStandAttributes();
