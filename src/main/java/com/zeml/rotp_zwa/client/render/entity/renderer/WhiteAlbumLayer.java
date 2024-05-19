@@ -48,7 +48,7 @@ public class WhiteAlbumLayer<T extends LivingEntity, M extends PlayerModel<T>> e
 
         IStandPower.getStandPowerOptional(entity).ifPresent((stand)->{
             StandType<?>  hm = InitStands.STAND_WHITE_ALBUM.getStandType();
-            if(stand.getType() == hm && stand.getStandManifestation()instanceof StandEntity){
+            if(stand.getType() == hm && stand.getStandManifestation()instanceof StandEntity && stand.getHeldAction() != InitStands.WA_BLOCK.get()){
                 M playerModel = getParentModel();
                 glovesModel.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
                 playerModel.copyPropertiesTo(glovesModel);

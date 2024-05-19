@@ -65,7 +65,7 @@ public class WhiteAlbumEntity extends StandEntity {
                     List<ProjectileEntity> list =  level.getEntitiesOfClass(ProjectileEntity.class, Objects.requireNonNull(this.getUser()).getBoundingBox().inflate(2),EntityPredicates.ENTITY_STILL_ALIVE);
                     list.forEach(projectileEntity -> {
 
-                        if(!InitTags.FIRE_PROJECTILE.contains(projectileEntity.getType())){
+                        if(!InitTags.NO_REFLECT.contains(projectileEntity.getType())){
                             RayTraceResult result = level.clip(new RayTraceContext(
                                     projectileEntity.position(),
                                     projectileEntity.position().add(projectileEntity.getDeltaMovement()),
@@ -86,9 +86,12 @@ public class WhiteAlbumEntity extends StandEntity {
 
                     });
                     if(power.getStamina()==0){
-                        setReflect(false);
-                        level.playSound(null,this.blockPosition(), InitSounds.WHITE_ALBUM_WEEPS_UNSUMMON.get(), SoundCategory.PLAYERS,1,1);
+                        if(getReflect()){
+                            setReflect(false);
+                            level.playSound(null,this.blockPosition(), InitSounds.WHITE_ALBUM_WEEPS_UNSUMMON.get(), SoundCategory.PLAYERS,1,1);
 
+                        }
+                        setFreezeWater(false);
                     }
                 }
 
