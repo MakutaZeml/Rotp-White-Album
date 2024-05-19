@@ -72,6 +72,9 @@
     "sounds": ["rotp_zwa:stand/wa_walker"]
   },
 
+  "wa_ora": {
+    "sounds": ["rotp_zwa:user/ghaccio_ora_01","rotp_zwa:user/ghaccio_ora_02","rotp_zwa:user/ghaccio_ora_03","rotp_zwa:user/ghaccio_ora_04","rotp_zwa:user/ghaccio_ora_05"]
+  },
 
   "void":{
     "sounds": [ "rotp_zwa:void"]

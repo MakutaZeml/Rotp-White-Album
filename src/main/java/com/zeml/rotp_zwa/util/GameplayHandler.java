@@ -1,43 +1,22 @@
 package com.zeml.rotp_zwa.util;
 
 import com.github.standobyte.jojo.JojoModConfig;
-import com.github.standobyte.jojo.entity.damaging.projectile.MRCrossfireHurricaneEntity;
-import com.github.standobyte.jojo.entity.damaging.projectile.MRFireballEntity;
-import com.github.standobyte.jojo.entity.damaging.projectile.MRFlameEntity;
 import com.github.standobyte.jojo.entity.stand.StandEntity;
-import com.github.standobyte.jojo.init.ModEntityTypes;
-import com.github.standobyte.jojo.init.ModParticles;
 import com.github.standobyte.jojo.init.ModStatusEffects;
-import com.github.standobyte.jojo.init.power.non_stand.ModPowers;
-import com.github.standobyte.jojo.init.power.non_stand.hamon.ModHamonSkills;
-import com.github.standobyte.jojo.power.impl.nonstand.INonStandPower;
-import com.github.standobyte.jojo.power.impl.nonstand.type.hamon.HamonData;
 import com.github.standobyte.jojo.power.impl.stand.IStandPower;
 import com.github.standobyte.jojo.power.impl.stand.type.StandType;
-import com.github.standobyte.jojo.util.mc.damage.DamageUtil;
 import com.github.standobyte.jojo.util.mc.damage.StandDamageSource;
-import com.github.standobyte.jojo.util.mod.JojoModUtil;
 import com.zeml.rotp_zwa.RotpWhiteAlbumAddon;
-import com.zeml.rotp_zwa.init.InitEntities;
-import com.zeml.rotp_zwa.init.InitSounds;
 import com.zeml.rotp_zwa.init.InitStands;
 import com.zeml.rotp_zwa.init.InitTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.BlazeEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -46,7 +25,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 @Mod.EventBusSubscriber(modid = RotpWhiteAlbumAddon.MOD_ID)
@@ -76,8 +54,6 @@ public class GameplayHandler {
                         }
                     });
                     player.removeEffect(ModStatusEffects.FREEZE.get());
-                    player.addEffect(new EffectInstance(Effects.DIG_SPEED,20,10));
-                    player.addEffect(new EffectInstance(Effects.DAMAGE_BOOST,20));
                     Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(15);
 
                     if(InitTags.ICE_SPEED.contains(player.level.getBlockState(player.blockPosition().below()).getBlock())){
@@ -88,6 +64,9 @@ public class GameplayHandler {
                 }else {
                     Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(0);
                 }
+
+            }else {
+                Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(0);
             }
             if(power.getHeldAction()==InitStands.WA_BLOCK.get()){
                 List<LivingEntity> list = player.level.getEntitiesOfClass(LivingEntity.class,player.getBoundingBox().inflate(11),EntityPredicates.ENTITY_STILL_ALIVE);
@@ -153,7 +132,7 @@ public class GameplayHandler {
                             }
 
                             if (dmgSource.isProjectile()) {
-                                if(!InitTags.FIRE_PROJECTILE.contains(ent.getType())){
+                                if(!InitTags.NO_REFLECT.contains(ent.getType())){
                                     event.setAmount(0);
                                 }else {
                                     event.setAmount(Math.max(event.getAmount() - 18.F / 2F, 0));

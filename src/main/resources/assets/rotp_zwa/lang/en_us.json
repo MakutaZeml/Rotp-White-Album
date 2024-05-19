@@ -2,11 +2,12 @@
   "entity.rotp_zwa.white_album": "White Album",
   "stand.rotp_zwa.white_album": "White Album",
 
+  "action.rotp_zwa.wa_punch": "Punch",
   "action.rotp_zwa.wa_freeze": "Freeze",
   "action.rotp_zwa.wa_unfreeze": "Unfreeze",
 
   "action.rotp_zwa.wa_block": "Ice shield",
-  "action.rotp_zwa.wa_reflec": "Projectile reflection",
+  "action.rotp_zwa.wa_reflec": "Gently Weeps",
   "action.rotp_zwa.wa_freeze_water": "Frost Walker",
 
 
