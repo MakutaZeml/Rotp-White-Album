@@ -22,6 +22,7 @@ import net.minecraft.entity.monster.StrayEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.vector.Vector3d;
@@ -31,12 +32,12 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class FreezeProjectile extends StandEntityAction {
 
     public FreezeProjectile(StandEntityAction.Builder builder) {
         super(builder);
-
     }
 
     @Override
@@ -59,8 +60,10 @@ public class FreezeProjectile extends StandEntityAction {
                                 ((StandEntity)entity).getUser().addEffect(new EffectInstance(ModStatusEffects.FREEZE.get(),100));
                                 userPower.consumeStamina(5);
                             }else if(!(entity instanceof StrayEntity)){
-                                DamageUtil.dealColdDamage(entity,7,userPower.getUser(),null);
-                                userPower.consumeStamina(3);
+                                if(!entity.isOnFire()){
+                                    DamageUtil.dealColdDamage(entity,7,userPower.getUser(),null);
+                                    userPower.consumeStamina(3);
+                                }
                             }
                         }
                     }
@@ -99,6 +102,7 @@ public class FreezeProjectile extends StandEntityAction {
             frostWalkerImitation(user, world, user.blockPosition(), 4);
         }
     }
+
 
     public static boolean turnSkeletonIntoStray(LivingEntity skeleton) {
         if (skeleton.level.isClientSide()) return false;

@@ -4,6 +4,7 @@ import com.github.standobyte.jojo.action.stand.StandEntityAction;
 import com.github.standobyte.jojo.entity.stand.StandEntity;
 import com.github.standobyte.jojo.entity.stand.StandEntityTask;
 import com.github.standobyte.jojo.power.impl.stand.IStandPower;
+import com.zeml.rotp_zwa.init.InitBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
@@ -44,14 +45,23 @@ public class UnFreezeWater extends StandEntityAction {
                     unfreezeWaterBlock(world, blockPos, entity);
                 }
             }
+            unFreezeLayerAir(world,blockPos);
         }
     }
 
     private static final BlockState WATER = Blocks.WATER.defaultBlockState();
+    private static final BlockState AIR = Blocks.AIR.defaultBlockState();
     private void unfreezeWaterBlock(World world, BlockPos blockPos, LivingEntity user) {
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.getBlock() == Blocks.FROSTED_ICE) {
             world.setBlockAndUpdate(blockPos, WATER);
+        }
+    }
+
+    private void unFreezeLayerAir(World world, BlockPos blockPos){
+        BlockState blockState = world.getBlockState(blockPos.above());
+        if(blockState.getBlock() == InitBlocks.WHITE_ALBUM_ICE_LAYER.get()){
+            world.setBlockAndUpdate(blockPos.above(),AIR);
         }
     }
 

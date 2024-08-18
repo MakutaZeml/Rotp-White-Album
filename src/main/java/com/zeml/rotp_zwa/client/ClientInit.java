@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -43,7 +44,7 @@ public class ClientInit {
             mc.getEntityRenderDispatcher().renderers.values().forEach(ClientInit::addLayersToEntities);
         });
 
-
+        MinecraftForge.EVENT_BUS.register(new ClientHandler());
     }
     @SubscribeEvent
     public static void onMcConstructor(ParticleFactoryRegisterEvent event){
@@ -53,7 +54,7 @@ public class ClientInit {
 
     }
     private static void addLayers(PlayerRenderer renderer, boolean slim){
-        renderer.addLayer(new WhiteAlbumLayer<>(renderer,new WhiteAlbumUserModel<>(0.55F,slim),slim));
+        renderer.addLayer(new WhiteAlbumLayer<>(renderer,new WhiteAlbumUserModel<>(0.2F,slim),slim));
         renderer.addLayer(new IceShieldLayer<>(renderer,new WhiteAlbumUserModel<>(0.6F,slim),slim));
         addLivingLayers(renderer);
         addBipedLayers(renderer);

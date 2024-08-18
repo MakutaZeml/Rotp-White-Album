@@ -1,5 +1,6 @@
 package com.zeml.rotp_zwa.client.render.entity.model.stand;
 
+import com.github.standobyte.jojo.entity.stand.stands.StarPlatinumEntity;
 import com.zeml.rotp_zwa.entity.stand.stands.WhiteAlbumEntity;
 import com.github.standobyte.jojo.client.render.entity.model.stand.HumanoidStandModel;
 import com.github.standobyte.jojo.client.render.entity.pose.ModelPose;
@@ -33,10 +34,18 @@ public class WhiteAlbumModel extends HumanoidStandModel<WhiteAlbumEntity> {
 	@Override
 	protected ModelPose initIdlePose() {
 		return new ModelPose<>(new RotationAngle[] {
-				RotationAngle.fromDegrees(leftArm, 0, 0, -0),
-
+				RotationAngle.fromDegrees(body,14.03f, -26.8f, -6.43f),
+				RotationAngle.fromDegrees(leftArm,39.71f, 16.59f, -53.97f),
+				RotationAngle.fromDegrees(leftForeArm,-67.5f, 0f, 0f),
+				RotationAngle.fromDegrees(rightArm,-52.5f, 0f, 75f),
+				RotationAngle.fromDegrees(rightForeArm,-57.5f, 0f, 0f),
+				RotationAngle.fromDegrees(leftLeg,-10.47f, 17.23f, -3.13f),
+				RotationAngle.fromDegrees(leftLowerLeg,32.5f, 0f, 0f),
+				RotationAngle.fromDegrees(rightLeg,45f, 0f, 0f),
+				RotationAngle.fromDegrees(rightLegJoint, 30f, 0f, 0f)
 		});
 	}
+
 
 
 }

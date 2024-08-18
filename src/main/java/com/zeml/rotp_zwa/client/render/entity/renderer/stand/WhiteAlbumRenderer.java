@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 public class WhiteAlbumRenderer extends StandEntityRenderer<WhiteAlbumEntity, WhiteAlbumModel> {
 
     public WhiteAlbumRenderer(EntityRendererManager renderManager) {
-        super(renderManager, new WhiteAlbumModel(), new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID, "textures/entity/stand/void.png"), 0);
+        super(renderManager, new WhiteAlbumModel(), new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID, "textures/entity/stand/white_album_stand.png"), 0);
     }
 
 }

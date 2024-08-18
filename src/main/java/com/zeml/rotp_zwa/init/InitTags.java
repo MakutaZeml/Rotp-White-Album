@@ -12,6 +12,7 @@ public class InitTags {
     public static final Tags.IOptionalNamedTag<EntityType<?>> NO_REFLECT = EntityTypeTags.createOptional(new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID,"irreflectable"));
 
     public static final Tags.IOptionalNamedTag<Block> ICE_SPEED = BlockTags.createOptional(new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID,"ice_speed"));
-
+    public static final Tags.IOptionalNamedTag<Block> ICE_LAYER_SPEED = BlockTags.createOptional(new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID,"ice_layer_speed"));
+    public static final Tags.IOptionalNamedTag<Block> ICE_BREAK = BlockTags.createOptional(new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID, "ice_break"));
     public static void iniTags(){}
 }

@@ -1,13 +1,12 @@
 package com.zeml.rotp_zwa.init;
 
 import com.github.standobyte.jojo.action.stand.StandEntityAction;
-import com.github.standobyte.jojo.action.stand.StandEntityHeavyAttack;
 import com.github.standobyte.jojo.action.stand.StandEntityLightAttack;
-import com.github.standobyte.jojo.power.impl.stand.StandInstance;
 import com.zeml.rotp_zwa.RotpWhiteAlbumAddon;
 import com.zeml.rotp_zwa.action.stand.FreezFloor;
 import com.zeml.rotp_zwa.action.stand.FrozenBlock;
 import com.zeml.rotp_zwa.action.stand.ReflectProyectile;
+import com.zeml.rotp_zwa.action.stand.WhiteAlbumPunch;
 import com.zeml.rotp_zwa.action.stand.projectile.FreezeProjectile;
 import com.zeml.rotp_zwa.action.stand.projectile.UnFreezeWater;
 import com.zeml.rotp_zwa.entity.stand.stands.WhiteAlbumEntity;
@@ -34,7 +33,7 @@ public class InitStands {
     // ======================================== White Album ========================================
 
     public static final RegistryObject<StandEntityAction> WHITE_ALBUM_PUNCH = ACTIONS.register("wa_punch",
-            () -> new StandEntityLightAttack(new StandEntityLightAttack.Builder()
+            () -> new WhiteAlbumPunch(new StandEntityLightAttack.Builder()
                     .punchSound(InitSounds.WHITE_ALBUM_PUNCH_LIGHT).swingHand().standOffsetFromUser(0,0,.5)
                     .standSound(StandEntityAction.Phase.WINDUP, InitSounds.GHACCIO_MAN_ORA)));
 
@@ -50,9 +49,10 @@ public class InitStands {
             ));
 
     public static final RegistryObject<StandEntityAction> FREEZE_WATER = ACTIONS.register("wa_freeze_water",
-            () -> new FreezFloor(new StandEntityAction.Builder()
+            () -> new FreezFloor(new StandEntityAction.Builder().standSound(InitSounds.WHITE_ALBUM_WALKER)
                     .standUserWalkSpeed(1.0F).cooldown(30).resolveLevelToUnlock(1)
             ));
+
 
     public static final RegistryObject<StandEntityAction> UNFREEZE = ACTIONS.register("wa_unfreeze",
             () -> new UnFreezeWater(new StandEntityAction.Builder().staminaCost(60).standSound(InitSounds.USER_UNFREEZE)
@@ -63,8 +63,6 @@ public class InitStands {
             () -> new ReflectProyectile(new StandEntityAction.Builder()
                     .standUserWalkSpeed(1.0F).cooldown(20).resolveLevelToUnlock(4)
             ));
-
-
 
     public static final EntityStandRegistryObject<EntityStandType<StandStats>, StandEntityType<WhiteAlbumEntity>> STAND_WHITE_ALBUM =
             new EntityStandRegistryObject<>("white_album",

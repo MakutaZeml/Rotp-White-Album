@@ -1,6 +1,7 @@
 package com.zeml.rotp_zwa;
 
 import com.zeml.rotp_zwa.init.*;
+import com.zeml.rotp_zwa.network.AddonPackets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,9 +23,10 @@ public class RotpWhiteAlbumAddon {
         InitStands.ACTIONS.register(modEventBus);
         InitStands.STANDS.register(modEventBus);
         InitParticles.PARTICLES.register(modEventBus);
-
+        InitBlocks.BLOCKS.register(modEventBus);
 
         InitTags.iniTags();
+        AddonPackets.init();
 
     }
 
