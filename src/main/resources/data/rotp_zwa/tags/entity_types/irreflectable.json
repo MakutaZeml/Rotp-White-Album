@@ -7,6 +7,9 @@
     "jojo:mr_crossfire_hurricane_special",
     "jojo:mr_red_bind",
     "minecraft:fireball",
-    "minecraft:small_fireball"
+    "minecraft:small_fireball",
+    "rotp_zhp:hp_vine",
+    "rotp_zhp:hp_grappling_vine",
+    "ropt_zhp:hp_grab_vine"
   ]
 }
