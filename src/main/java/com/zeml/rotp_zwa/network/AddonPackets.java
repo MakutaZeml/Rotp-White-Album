@@ -1,7 +1,8 @@
 package com.zeml.rotp_zwa.network;
 
 import com.zeml.rotp_zwa.RotpWhiteAlbumAddon;
-import com.zeml.rotp_zwa.network.server.ActiveFreezFloorPacket;
+import com.zeml.rotp_zwa.network.server.FreezeFloorPacket;
+import com.zeml.rotp_zwa.network.server.GentlyWeepsPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -26,16 +27,12 @@ public class AddonPackets {
                 .simpleChannel();
 
         int packetIndex = 0;
-        /*
-        channel.registerMessage(packetIndex++, AddTagPacket.class,
-                AddTagPacket::encode, AddTagPacket::decode, AddTagPacket::handle,
+        channel.registerMessage(packetIndex++, GentlyWeepsPacket.class,
+                GentlyWeepsPacket::encode,GentlyWeepsPacket::decode,GentlyWeepsPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-
-         */
-        channel.registerMessage(packetIndex++, ActiveFreezFloorPacket.class,
-                ActiveFreezFloorPacket::encode,ActiveFreezFloorPacket::decode,ActiveFreezFloorPacket::handle,
+        channel.registerMessage(packetIndex++, FreezeFloorPacket.class,
+                FreezeFloorPacket::encode,FreezeFloorPacket::decode,FreezeFloorPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-
     }
 
     public static void sendToClient(Object msg, ServerPlayerEntity player) {

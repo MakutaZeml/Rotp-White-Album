@@ -1,7 +1,9 @@
 package com.zeml.rotp_zwa;
 
+import com.zeml.rotp_zwa.capability.CapabilityHandler;
 import com.zeml.rotp_zwa.init.*;
 import com.zeml.rotp_zwa.network.AddonPackets;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,9 +27,14 @@ public class RotpWhiteAlbumAddon {
         InitParticles.PARTICLES.register(modEventBus);
         InitBlocks.BLOCKS.register(modEventBus);
 
+        modEventBus.addListener(this::preInit);
+
+    }
+
+    private void preInit(FMLCommonSetupEvent event){
+        CapabilityHandler.commonSetupRegister();
         InitTags.iniTags();
         AddonPackets.init();
-
     }
 
     public static Logger getLogger() {

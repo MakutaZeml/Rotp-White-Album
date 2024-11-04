@@ -2,6 +2,11 @@ package com.zeml.rotp_zwa.action.stand;
 
 import java.util.stream.Stream;
 
+import com.github.standobyte.jojo.action.ActionTarget;
+import com.zeml.rotp_zwa.capability.LivingData;
+import com.zeml.rotp_zwa.capability.LivingDataProvider;
+import net.minecraft.entity.LivingEntity;
+import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +25,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class ReflectProyectile extends StandEntityAction {
-    public static boolean active = false;
     public ReflectProyectile(StandEntityAction.Builder builder) {
         super(builder);
     }
@@ -29,30 +33,46 @@ public class ReflectProyectile extends StandEntityAction {
     @Override
     public void standPerform(@NotNull World world, StandEntity standEntity, IStandPower userPower, StandEntityTask task){
         if(!world.isClientSide){
-            ((WhiteAlbumEntity) standEntity).setReflect( !((WhiteAlbumEntity) standEntity).getReflect());
-            this.active = !this.active;
-            SoundEvent user = ((WhiteAlbumEntity) standEntity).getReflect()? InitSounds.USER_WEEPS_SUMMON.get():InitSounds.USER_WEEPS_UNSUMMON.get();
-            world.playSound(null,standEntity.blockPosition(),user, SoundCategory.PLAYERS,1,1);
-
+            LivingEntity standUser = userPower.getUser();
+            LazyOptional<LivingData> playerDataOptional = standUser.getCapability(LivingDataProvider.CAPABILITY);
+            playerDataOptional.ifPresent(playerData ->{
+                boolean isGently = playerData.isGentlyWeeps();
+                playerData.setGentlyWeeps(!isGently);
+            });
         }
     }
 
     @Override
     public boolean greenSelection(IStandPower power, ActionConditionResult conditionCheck) {
-        return this.active;
+        LivingEntity standUser = power.getUser();
+        LazyOptional<LivingData> playerDataOptional = standUser.getCapability(LivingDataProvider.CAPABILITY);
+        return playerDataOptional.map(LivingData::isGentlyWeeps).isPresent()?playerDataOptional.map(LivingData::isGentlyWeeps).get() :false;
     }
 
     @Override
     public Stream<SoundEvent> getSounds(StandEntity standEntity, IStandPower standPower, Phase phase, StandEntityTask task) {
-        return Stream.of(((WhiteAlbumEntity) standEntity).geFreezeWater() ? InitSounds.WHITE_ALBUM_WALKER.get() : InitSounds.WHITE_ALBUM_UNFREEZE.get());
+        LivingEntity standUser = standPower.getUser();
+        LazyOptional<LivingData> playerDataOptional = standUser.getCapability(LivingDataProvider.CAPABILITY);
+        boolean activated = playerDataOptional.map(LivingData::isGentlyWeeps).isPresent()?playerDataOptional.map(LivingData::isGentlyWeeps).get() :false;
+        return Stream.of(activated? InitSounds.WHITE_ALBUM_WALKER.get() : InitSounds.WHITE_ALBUM_UNFREEZE.get());
     }
 
+
+    @Override
+    protected SoundEvent getShout(LivingEntity user, IStandPower power, ActionTarget target, boolean wasActive) {
+        LazyOptional<LivingData> playerDataOptional = user.getCapability(LivingDataProvider.CAPABILITY);
+        boolean activated = playerDataOptional.map(LivingData::isGentlyWeeps).isPresent()?playerDataOptional.map(LivingData::isGentlyWeeps).get() :false;
+        return !activated ? InitSounds.USER_WEEPS_SUMMON.get():InitSounds.USER_WEEPS_UNSUMMON.get();
+    }
 
     ResourceLocation UN_REFLECT = new ResourceLocation(RotpWhiteAlbumAddon.MOD_ID,"textures/action/wa_unreflec.png");
 
     @Override
     public ResourceLocation getIconTexture(@Nullable IStandPower power) {
-        if(!active){
+        LivingEntity standUser = power.getUser();
+        LazyOptional<LivingData> playerDataOptional = standUser.getCapability(LivingDataProvider.CAPABILITY);
+        boolean activated = playerDataOptional.map(LivingData::isGentlyWeeps).isPresent()?playerDataOptional.map(LivingData::isGentlyWeeps).get() :false;
+        if(!activated){
             return super.getIconTexture(power);
         }
         return UN_REFLECT;

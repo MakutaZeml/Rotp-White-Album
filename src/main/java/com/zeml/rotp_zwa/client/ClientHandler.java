@@ -6,11 +6,15 @@ import com.github.standobyte.jojo.power.impl.stand.type.StandType;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.zeml.rotp_zwa.RotpWhiteAlbumAddon;
 import com.zeml.rotp_zwa.init.InitStands;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
+import net.minecraft.client.renderer.FirstPersonRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderArmEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -69,4 +73,7 @@ public class ClientHandler {
             }
         });
     }
+
+
+
 }
