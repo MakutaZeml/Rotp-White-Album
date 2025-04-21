@@ -1,5 +1,6 @@
 package com.zeml.rotp_zwa.init;
 
+import com.github.standobyte.jojo.action.stand.StandAction;
 import com.github.standobyte.jojo.action.stand.StandEntityAction;
 import com.github.standobyte.jojo.action.stand.StandEntityLightAttack;
 import com.zeml.rotp_zwa.RotpWhiteAlbumAddon;
@@ -37,13 +38,13 @@ public class InitStands {
                     .punchSound(InitSounds.WHITE_ALBUM_PUNCH_LIGHT).swingHand()
                     .standSound(StandEntityAction.Phase.WINDUP, InitSounds.GHACCIO_MAN_ORA)));
 
-    public static final RegistryObject<StandEntityAction> WA_BLOCK = ACTIONS.register("wa_block",
-            () -> new FrozenBlock(new StandEntityAction.Builder().holdType().standSound(InitSounds.WHITE_ALBUM_BLOCK)
+    public static final RegistryObject<StandAction> WA_BLOCK = ACTIONS.register("wa_block",
+            () -> new FrozenBlock(new StandAction.Builder().holdType().shout(InitSounds.WHITE_ALBUM_BLOCK)
                     .cooldown(60).staminaCostTick(6)
                     ));
 
     public static final RegistryObject<StandEntityAction> FREEZE_SHOT = ACTIONS.register("wa_freeze",
-            () -> new FreezeProjectile(new StandEntityAction.Builder().holdType().staminaCostTick(2)
+            () -> new FreezeProjectile(new StandEntityAction.Builder().holdType().staminaCostTick(8)
                     .standUserWalkSpeed(1.0F).cooldown(30).resolveLevelToUnlock(2)
                     .standSound(InitSounds.WHITE_ALBUM_FREEZE).standSound(InitSounds.USER_FREEZE)
             ));

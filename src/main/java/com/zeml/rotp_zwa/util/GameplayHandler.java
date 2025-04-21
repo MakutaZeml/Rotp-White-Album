@@ -146,10 +146,11 @@ public class GameplayHandler {
                 if(power.getType() == wa) {
                     if(power.getStandManifestation() instanceof StandEntity){
                         player.removeEffect(ModStatusEffects.FREEZE.get());
+                        if(player.getItemInHand(Hand.MAIN_HAND) == ItemStack.EMPTY){
+                            player.addEffect(new EffectInstance(ModStatusEffects.INTEGRATED_STAND.get(),20,0,false,false,false));
+                        }
                     }
-                    if(player.getItemInHand(Hand.MAIN_HAND) == ItemStack.EMPTY){
-                        player.addEffect(new EffectInstance(ModStatusEffects.INTEGRATED_STAND.get(),20,0,false,false,false));
-                    }else {
+                    else {
                         player.removeEffect(ModStatusEffects.INTEGRATED_STAND.get());
                     }
                     if(power.getStamina() <= 2){
@@ -186,9 +187,7 @@ public class GameplayHandler {
                             }
 
                         }
-                        if(standPower.getHeldAction()==InitStands.FREEZE_SHOT.get() && event.getAmount() > 0){
-                            standPower.stopHeldAction(false);
-                        }
+
 
                         if(standPower.getHeldAction()==InitStands.WA_BLOCK.get()){
                             if(ent instanceof LivingEntity){

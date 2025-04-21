@@ -11,6 +11,7 @@ import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.FirstPersonRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderArmEvent;
@@ -26,34 +27,18 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientHandler {
 
 
-    private static boolean originalHatVisibility;
-    private static boolean originalJacketVisibility;
-    private static boolean originalLeftPantsVisibility;
-    private static boolean originalRightPantsVisibility;
-    private static boolean originalRightSleeveVisibility;
-    private static boolean originalLeftSleeveVisibility;
-    private static boolean hasStoredOriginalValues = false;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     @OnlyIn(Dist.CLIENT)
     public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
         if(!ClientUtil.canSeeStands()) return;
         PlayerEntity player = event.getPlayer();
+        AbstractClientPlayerEntity abstractClientPlayer = (AbstractClientPlayerEntity) player;
         PlayerModel<AbstractClientPlayerEntity> model = event.getRenderer().getModel();
         IStandPower.getStandPowerOptional(player).ifPresent(power -> {
             StandType<?> WA = InitStands.STAND_WHITE_ALBUM.getStandType();
             if (power.getType() == WA) {
                 if (power.isActive()) {
-                    if (!hasStoredOriginalValues) {
-                        originalHatVisibility = model.hat.visible;
-                        originalJacketVisibility = model.jacket.visible;
-                        originalLeftPantsVisibility = model.leftPants.visible;
-                        originalRightPantsVisibility = model.rightPants.visible;
-                        originalRightSleeveVisibility = model.rightSleeve.visible;
-                        originalLeftSleeveVisibility = model.leftSleeve.visible;
-                        hasStoredOriginalValues = true;
-                    }
-
                     model.hat.visible = false;
                     model.jacket.visible = false;
                     model.leftPants.visible = false;
@@ -62,14 +47,12 @@ public class ClientHandler {
                     model.leftSleeve.visible = false;
                 }
             } else {
-                if (hasStoredOriginalValues) {
-                    model.hat.visible = originalHatVisibility;
-                    model.jacket.visible = originalJacketVisibility;
-                    model.leftPants.visible = originalLeftPantsVisibility;
-                    model.rightPants.visible = originalRightPantsVisibility;
-                    model.rightSleeve.visible = originalRightSleeveVisibility;
-                    model.leftSleeve.visible = originalLeftSleeveVisibility;
-                }
+                model.hat.visible = abstractClientPlayer.isModelPartShown(PlayerModelPart.HAT);
+                model.jacket.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET);
+                model.leftPants.visible = abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG);
+                model.rightPants.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG);
+                model.rightSleeve.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE);
+                model.leftSleeve.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE);
             }
         });
     }

@@ -20,6 +20,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.monster.StrayEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
@@ -55,14 +56,19 @@ public class FreezeProjectile extends StandEntityAction {
             world.getEntitiesOfClass(LivingEntity.class,userPower.getUser().getBoundingBox().inflate(5F), EntityPredicates.ENTITY_STILL_ALIVE).forEach(
                     entity -> {
                         if(entity.distanceTo(standEntity)<5 && entity != userPower.getUser() && entity != standEntity){
+
+                            float a = (float) standEntity.getAttackDamage();
+                            float c = (float) (standEntity.getMaxRange()*2.6/10);
+                            float damage = (float) (a*Math.exp(-entity.distanceTo(standEntity)*entity.distanceTo(standEntity)/(2*c*c)))/2;
+
+                            System.out.println(damage);
+
                             if(entity instanceof StandEntity && ((StandEntity) entity).getUser().distanceTo(standEntity)>5){
-                                DamageUtil.dealColdDamage(((StandEntity)entity).getUser(),5F,userPower.getUser(),null);
+                                DamageUtil.dealColdDamage(((StandEntity)entity).getUser(),damage,userPower.getUser(),null);
                                 ((StandEntity)entity).getUser().addEffect(new EffectInstance(ModStatusEffects.FREEZE.get(),100));
-                                userPower.consumeStamina(5);
-                            }else if(!(entity instanceof StrayEntity)){
+                            }else if(!(entity instanceof StandEntity)){
                                 if(!entity.isOnFire()){
-                                    DamageUtil.dealColdDamage(entity,7,userPower.getUser(),null);
-                                    userPower.consumeStamina(3);
+                                    DamageUtil.dealColdDamage(entity,damage,userPower.getUser(),null);
                                 }
                             }
                         }
@@ -80,7 +86,7 @@ public class FreezeProjectile extends StandEntityAction {
                 if (entityTarget instanceof LivingEntity && !entityTarget.isOnFire()) {
                     int difficulty = world.getDifficulty().getId();
                     LivingEntity targetLiving = (LivingEntity) entityTarget;
-                    float damage = (float) Math.pow(2, difficulty);
+                    float damage = 2;
                     if (targetLiving.getType() == EntityType.SKELETON && targetLiving.isAlive() && targetLiving.getHealth() <= damage) {
                         turnSkeletonIntoStray(targetLiving);
                     }
@@ -160,7 +166,8 @@ public class FreezeProjectile extends StandEntityAction {
     }
 
 
-
-
-
+    @Override
+    public boolean cancelHeldOnGettingAttacked(IStandPower power, DamageSource dmgSource, float dmgAmount) {
+        return true;
+    }
 }

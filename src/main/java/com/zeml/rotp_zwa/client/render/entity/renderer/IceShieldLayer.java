@@ -47,8 +47,7 @@ public class IceShieldLayer<T extends LivingEntity, M extends BipedModel<T>> ext
                        float limbSwing, float limbSwingAmount, float partialTick, float ticks, float yRot, float xRot){
         if(!(entity.hasEffect(Effects.INVISIBILITY ) || entity.hasEffect(ModStatusEffects.FULL_INVISIBILITY.get()))){
             IStandPower.getStandPowerOptional(entity).ifPresent((stand)->{
-                StandType<?> hm = InitStands.STAND_WHITE_ALBUM.getStandType();
-                if(stand.getType() == hm && stand.getStandManifestation()instanceof StandEntity && stand.getHeldAction()==InitStands.WA_BLOCK.get()){
+                if(stand.getHeldAction()==InitStands.WA_BLOCK.get()){
                     M playerModel = getParentModel();
                     thornsModel.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
                     playerModel.copyPropertiesTo(thornsModel);
@@ -59,15 +58,15 @@ public class IceShieldLayer<T extends LivingEntity, M extends BipedModel<T>> ext
                     ResourceLocation texture = getTexture();
                     texture = StandSkinsManager.getInstance().getRemappedResPath(manager -> manager
                             .getStandSkin(stand.getStandInstance().get()), texture);
-                    IVertexBuilder vertexBuilder = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(texture), false, false);
-                    thornsModel.renderToBuffer(matrixStack, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                    IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(texture));
+                    thornsModel.renderToBuffer(matrixStack, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, .5F);
                 }
             });
         }
     }
 
     private ResourceLocation getTexture() {
-        return slim ? ICE_LAYER_SLIM : ICE_LAYER;
+        return ICE_LAYER;
     }
 
     @Override

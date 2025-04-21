@@ -51,8 +51,7 @@ public class WhiteAlbumLayer<T extends LivingEntity, M extends BipedModel<T>> ex
 
         if(!(entity.hasEffect(Effects.INVISIBILITY ) || entity.hasEffect(ModStatusEffects.FULL_INVISIBILITY.get()))){
             IStandPower.getStandPowerOptional(entity).ifPresent((stand)->{
-                StandType<?>  hm = InitStands.STAND_WHITE_ALBUM.getStandType();
-                if(stand.getType() == hm && stand.getStandManifestation()instanceof StandEntity && stand.getHeldAction() != InitStands.WA_BLOCK.get()){
+                if(stand.getType() == InitStands.STAND_WHITE_ALBUM.getStandType() && stand.getStandManifestation()instanceof StandEntity){
                     M playerModel = getParentModel();
                     glovesModel.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
                     playerModel.copyPropertiesTo(glovesModel);
@@ -63,9 +62,7 @@ public class WhiteAlbumLayer<T extends LivingEntity, M extends BipedModel<T>> ex
                     ResourceLocation texture = getTexture();
                     texture = StandSkinsManager.getInstance().getRemappedResPath(manager -> manager
                             .getStandSkin(stand.getStandInstance().get()), texture);
-                    IVertexBuilder vertexBuilder = ItemRenderer.getArmorFoilBuffer(buffer,
-                            RenderType.armorCutoutNoCull(texture),
-                            false, false);
+                    IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(texture));
                     glovesModel.renderToBuffer(matrixStack, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
                 }
             });

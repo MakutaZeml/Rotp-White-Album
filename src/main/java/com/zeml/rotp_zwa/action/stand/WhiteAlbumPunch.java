@@ -46,16 +46,23 @@ public class WhiteAlbumPunch extends StandEntityLightAttack {
         switch (target.getType()) {
             case BLOCK:
                 blockDestroy(world, user, target, 0.0, 0.0, 0.0,power);
-                world.playSound((PlayerEntity)null, user.getX(), user.getY(), user.getZ(), (SoundEvent) ModSounds.HAMON_SYO_PUNCH.get(), user.getSoundSource(), 1.5F, 1.2F);
+                world.playSound(null, user.getX(), user.getY(), user.getZ(), ModSounds.HAMON_SYO_PUNCH.get(), user.getSoundSource(), 1.5F, 1.2F);
                 break;
             case ENTITY:
                 if (!world.isClientSide() && target.getType() == ActionTarget.TargetType.ENTITY) {
                     Entity entity = target.getEntity();
-                    if (entity instanceof LivingEntity) {
+                    if (entity instanceof PlayerEntity) {
                         LivingEntity targetEntity = (LivingEntity)entity;
                         PlayerEntity pEntity = (PlayerEntity)user;
                         if (entity.hurt(EntityDamageSource.playerAttack(pEntity), getDamage(world, power))) {
-                            world.playSound((PlayerEntity)null, targetEntity.getX(), targetEntity.getEyeY(), targetEntity.getZ(), sound, targetEntity.getSoundSource(), volume, pitch);
+                            world.playSound(null, targetEntity.getX(), targetEntity.getEyeY(), targetEntity.getZ(), sound, targetEntity.getSoundSource(), volume, pitch);
+                            targetEntity.knockback(2.0F, user.getX() - targetEntity.getX(), user.getZ() - targetEntity.getZ());
+                        }
+                    }else if(entity instanceof LivingEntity){
+                        LivingEntity targetEntity = (LivingEntity)entity;
+                        LivingEntity mob = user;
+                        if (entity.hurt(EntityDamageSource.mobAttack(mob), getDamage(world, power))) {
+                            world.playSound(null, targetEntity.getX(), targetEntity.getEyeY(), targetEntity.getZ(), sound, targetEntity.getSoundSource(), volume, pitch);
                             targetEntity.knockback(2.0F, user.getX() - targetEntity.getX(), user.getZ() - targetEntity.getZ());
                         }
                     }
@@ -106,7 +113,7 @@ public class WhiteAlbumPunch extends StandEntityLightAttack {
                 world.destroyBlock(pos, dropItem);
             } else {
                 SoundType soundType = blockState.getSoundType(world, pos, user);
-                world.playSound((PlayerEntity)null, pos, soundType.getHitSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 8.0F, soundType.getPitch() * 0.5F);
+                world.playSound(null, pos, soundType.getHitSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1.0F) / 8.0F, soundType.getPitch() * 0.5F);
             }
         }
 
