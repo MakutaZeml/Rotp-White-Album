@@ -46,13 +46,6 @@ public class ClientHandler {
                     model.rightSleeve.visible = false;
                     model.leftSleeve.visible = false;
                 }
-            } else {
-                model.hat.visible = abstractClientPlayer.isModelPartShown(PlayerModelPart.HAT);
-                model.jacket.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET);
-                model.leftPants.visible = abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG);
-                model.rightPants.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG);
-                model.rightSleeve.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE);
-                model.leftSleeve.visible =  abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE);
             }
         });
     }
