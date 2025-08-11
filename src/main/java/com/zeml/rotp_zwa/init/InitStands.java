@@ -40,7 +40,7 @@ public class InitStands {
 
     public static final RegistryObject<StandAction> WA_BLOCK = ACTIONS.register("wa_block",
             () -> new FrozenBlock(new StandAction.Builder().holdType().shout(InitSounds.WHITE_ALBUM_BLOCK)
-                    .cooldown(60).staminaCostTick(6)
+                    .cooldown(60).staminaCostTick(6).heldWalkSpeed(.5F)
                     ));
 
     public static final RegistryObject<StandEntityAction> FREEZE_SHOT = ACTIONS.register("wa_freeze",

@@ -190,6 +190,7 @@ public class GameplayHandler {
 
 
                         if(standPower.getHeldAction()==InitStands.WA_BLOCK.get()){
+                            standPower.consumeStamina(7.5F*event.getAmount());
                             if(ent instanceof LivingEntity){
                                 LivingEntity liv = (LivingEntity) ent;
                                 liv.addEffect(new EffectInstance(ModStatusEffects.FREEZE.get(),30));

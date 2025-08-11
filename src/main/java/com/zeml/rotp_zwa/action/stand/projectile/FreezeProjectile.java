@@ -60,9 +60,6 @@ public class FreezeProjectile extends StandEntityAction {
                             float a = (float) standEntity.getAttackDamage();
                             float c = (float) (standEntity.getMaxRange()*2.6/10);
                             float damage = (float) (a*Math.exp(-entity.distanceTo(standEntity)*entity.distanceTo(standEntity)/(2*c*c)))/2;
-
-                            System.out.println(damage);
-
                             if(entity instanceof StandEntity && ((StandEntity) entity).getUser().distanceTo(standEntity)>5){
                                 DamageUtil.dealColdDamage(((StandEntity)entity).getUser(),damage,userPower.getUser(),null);
                                 ((StandEntity)entity).getUser().addEffect(new EffectInstance(ModStatusEffects.FREEZE.get(),100));
