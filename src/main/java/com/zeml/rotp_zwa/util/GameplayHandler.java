@@ -1,6 +1,7 @@
 package com.zeml.rotp_zwa.util;
 
 import com.github.standobyte.jojo.JojoModConfig;
+import com.github.standobyte.jojo.entity.damaging.projectile.ModdedProjectileEntity;
 import com.github.standobyte.jojo.entity.damaging.projectile.ownerbound.OwnerBoundProjectileEntity;
 import com.github.standobyte.jojo.entity.stand.StandEntity;
 import com.github.standobyte.jojo.init.ModStatusEffects;
@@ -256,6 +257,9 @@ public class GameplayHandler {
                         LazyOptional<LivingData> targetDataOptional = livingTarget.getCapability(LivingDataProvider.CAPABILITY);
                         if (targetDataOptional.map(LivingData::isGentlyWeeps).orElse(false)) {
                             projectile.setDeltaMovement(projectile.getDeltaMovement().reverse());
+                            if(projectile instanceof ModdedProjectileEntity){
+                                ((ModdedProjectileEntity) projectile).setIsDeflected();
+                            }
                             event.setCanceled(true);
                             IStandPower.getStandPowerOptional((LivingEntity) target).ifPresent(power -> power.consumeStamina(14));
                             MCUtil.runCommand(livingTarget,"/playsound rotp_zwa:wa_deflect player @s ~ ~ ~");
